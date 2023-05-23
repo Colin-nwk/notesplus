@@ -1,16 +1,16 @@
 import React from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { NoteTakingInput } from "../components/NoteTakingInput";
 
-type Props = {};
+import { useRoute } from "@react-navigation/native";
+import { EditScreenRouteProp } from "../shared/types";
 
-export const EditNoteScreen: React.FC = (props: Props) => {
-  const saveNote = async (text: string) => {
-    await AsyncStorage.setItem("note", text);
-  };
+export const EditNoteScreen: React.FC = () => {
+  const route = useRoute<EditScreenRouteProp>();
+  const noteId = route.params.noteId;
   return (
     <>
-      <NoteTakingInput saveNote={saveNote} />
+      <NoteTakingInput noteId={noteId} />
     </>
   );
 };

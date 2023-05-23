@@ -1,22 +1,35 @@
 import React from "react";
 import { TextInput, Button, StyleSheet } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getNote } from "../services/NoteStoreService";
+import { saveNote } from "./../services/NoteStoreService";
 
 type Props = {
-  saveNote: (text: string) => void;
+  noteId: string | undefined;
 };
 
-export const NoteTakingInput: React.FC<Props> = ({ saveNote }) => {
+export const NoteTakingInput: React.FC<Props> = ({ noteId }) => {
   const [text, setText] = useState<string>("");
+
+  useEffect(() => {
+    if (noteId) {
+      getNote(noteId).then((result) => setText(result?.text ?? ""));
+    }
+  }, []);
+  const saveNoteHandler = () => {
+    saveNote(text, noteId);
+  };
   return (
     <>
       <TextInput
+        autoFocus={true}
+        autoCorrect={true}
         multiline={true}
         style={styles.textinput}
         value={text}
         onChangeText={setText}
       />
-      <Button title="Save Note" onPress={() => saveNote(text)} />
+      <Button title="Save Note" onPress={saveNoteHandler} />
     </>
   );
 };
