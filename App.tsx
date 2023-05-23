@@ -1,26 +1,22 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
-import { useState } from "react";
-export default function App() {
-  const [text, setText] = useState<string>("");
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+import { StyleSheet } from "react-native";
 
+import { HomeScreen } from "./screens/HomeScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { EditNoteScreen } from "./screens/EditNoteScreen";
+import { RootStackParamList } from "./shared/types";
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+export default function App() {
+  return (
+    <NavigationContainer>
       <StatusBar style="auto" />
-      <TextInput
-        multiline={true}
-        style={styles.textinput}
-        value={text}
-        onChangeText={setText}
-      />
-      <Button
-        title="Save Note"
-        onPress={() => {
-          alert(text);
-        }}
-      />
-    </View>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="EditNote" component={EditNoteScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -30,14 +26,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  textinput: {
-    backgroundColor: "#ffb70342",
-    width: "100%",
-    height: 200,
-    fontSize: 16,
-    paddingHorizontal: 20,
-    paddingTop: 30,
-    paddingBottom: 20,
   },
 });
