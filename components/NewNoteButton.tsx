@@ -7,7 +7,9 @@ import { ScreenNavigationProp } from "../shared/types";
 export const NewNoteButton: React.FC = () => {
   const navigation = useNavigation<ScreenNavigationProp>();
   return (
-    <Pressable onPress={() => navigation.navigate("EditNote")}>
+    <Pressable
+      onPress={() => navigation.navigate("EditNote", { noteId: undefined })}
+    >
       <FontAwesome name="pencil-square-o" size={30} color="#ffb701" />
     </Pressable>
   );
